@@ -1,0 +1,39 @@
+﻿@model List<AdocrudApp.Models.Customer>
+
+@{
+    ViewData["Title"] = "Customer List";
+}
+
+<div class="container mt-5">
+    <h2>@ViewData["Title"]</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var customer in Model)
+            {
+                <tr>
+                    <th scope="row">@customer.Id</th>
+                    <td>@customer.FirstName</td>
+                    <td>@customer.LastName</td>
+                    <td>
+                        <a href="@Url.Action("Edit", "Customer", new { id = customer.Id })" class="btn btn-warning btn-sm">Edit</a>
+                          @* <a  href="@Url.Action("Delete", "Customer", new { id = customer.Id })" class="btn btn-danger btn-sm">Delete</a> *@
+                        <form method="post" asp-action="Delete" asp-controller="Customer">
+                            <input type="hidden" name="id" value="@customer.Id" /> <!-- Pass the Id here -->
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a href="@Url.Action("AddCustomer", "Customer")" class="btn btn-primary">Add New Customer</a>
+</div>
